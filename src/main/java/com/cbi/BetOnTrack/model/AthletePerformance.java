@@ -13,4 +13,17 @@ public class AthletePerformance {
 
     @OneToOne
     private Performance performance;
+
+    public AthletePerformance(Athlete athlete, Performance performance) {
+        this.athlete = athlete;
+        this.performance = performance;
+    }
+
+    public Performance getPerformance() {
+        return this.performance;
+    }
+
+    public Athlete getAthlete() {
+        return this.athlete;
+    }
 }

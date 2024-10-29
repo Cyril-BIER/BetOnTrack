@@ -11,5 +11,13 @@ public class Performance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer place;
+    private Integer rank;
+
+    public Performance(Integer rank) {
+        this.rank = rank;
+    }
+
+    public Integer getRank() {
+        return this.rank;
+    }
 }

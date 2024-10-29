@@ -14,4 +14,8 @@ public class EventGroup {
 
     @OneToMany
     private List<Event> events;
+
+    public EventGroup(String name) {
+        this.name = name;
+    }
 }
