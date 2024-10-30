@@ -22,16 +22,22 @@ public class RunPerformance extends Performance{
     }
 
     public String toString(){
-        String s;
-        if (time.getHour() != 0) s = time.format(DateTimeFormatter.ofPattern("HH:mm:ss.SS"));
-        if (time.getMinute() != 0) {
-            s= time.format(DateTimeFormatter.ofPattern("mm:ss.SS"));
-        }else{
-            s = time.format(DateTimeFormatter.ofPattern("ss.SS"));
+        DateTimeFormatter formatter;
+
+        if (time.getHour() != 0) {
+            formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SS");
+        } else if (time.getMinute() != 0) {
+            formatter = DateTimeFormatter.ofPattern("mm:ss.SS");
+        } else {
+            formatter = DateTimeFormatter.ofPattern("ss.SS");
         }
-        if(this.wind != null){
-            s +=" ("+wind +"m/s)";
+
+        String s = time.format(formatter);
+
+        if (this.wind != null) {
+            s += " (" + wind + "m/s)";
         }
+
         return s;
     }
 }

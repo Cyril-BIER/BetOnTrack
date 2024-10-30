@@ -6,18 +6,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Performance {
+public abstract class Performance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer rank;
 
-    public Performance(Integer rank) {
+    Performance(Integer rank) {
         this.rank = rank;
     }
 
     public Integer getRank() {
         return this.rank;
     }
+
+    public abstract String toString();
 }
