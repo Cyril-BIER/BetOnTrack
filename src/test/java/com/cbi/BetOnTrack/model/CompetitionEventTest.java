@@ -14,14 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class CompetitionEventTest {
     private static Event event1500m;
     private static Event eventDiscusThrow;
+    private static Event event100m;
 
     @BeforeAll
     public static void setupEvent(){
-        EventGroup distanceRunning = new EventGroup("Distance Running");
+        EventGroup raceEvent = new EventGroup("Races");
         EventGroup throwingEvent = new EventGroup("Throw");
 
-        event1500m = new Event(distanceRunning, "1500");
+        event1500m = new Event(raceEvent, "1500");
         eventDiscusThrow = new Event(throwingEvent, "Discus Throw");
+        event100m = new Event(raceEvent, "100m");
 
     }
 
@@ -114,6 +116,34 @@ class CompetitionEventTest {
                 new AthleteResult(1, "Valarie","Allman","69.59 (-1.0m/s)"),
                 new AthleteResult(2, "Melina","Robert-Michon","66.73 (-1.0m/s)"),
                 new AthleteResult(3, "Jorinde","Van Klinken","64.81 (-1.0m/s)")
+        );
+
+        assertEquals(expected,competitionEvent.getResult());
+    }
+
+    @Test
+    public void sprintEventGetResult(){
+        List<AthletePerformance> athletePerformances = Arrays.asList(
+                new AthletePerformance(
+                        new Athlete("Kishane","Thompson"),
+                        new RunPerformance(2,LocalTime.of(0,0,9,797890000),1.0)
+                ),
+                new AthletePerformance(
+                        new Athlete("Noah","Lyles"),
+                        new RunPerformance(1,LocalTime.of(0,0,9,797840000),1.0)
+                ),
+                new AthletePerformance(
+                        new Athlete("Fred","Kerley"),
+                        new RunPerformance(3,LocalTime.of(0,0,9,810000000),1.0)
+                )
+
+        );
+        CompetitionEvent competitionEvent = new CompetitionEvent(event100m,athletePerformances);
+
+        List<AthleteResult> expected = Arrays.asList(
+                new AthleteResult(1, "Noah","Lyles","09.79 (1.0m/s)"),
+                new AthleteResult(2, "Kishane","Thompson","09.79 (1.0m/s)"),
+                new AthleteResult(3, "Fred","Kerley","09.81 (1.0m/s)")
         );
 
         assertEquals(expected,competitionEvent.getResult());
