@@ -18,6 +18,12 @@ public class Athlete {
         this.lastName = lastName;
     }
 
+    public Athlete(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
