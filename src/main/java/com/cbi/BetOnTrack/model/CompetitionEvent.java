@@ -13,19 +13,19 @@ public class CompetitionEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Event event;
+    @ManyToOne
+    private final Event event;
+
+    @OneToMany
+    private List<Athlete> startList;
 
     @OneToMany
     private List<AthletePerformance> performances;
 
-    public CompetitionEvent(Event event) {
+    public CompetitionEvent(Event event, List<Athlete> startList) {
         this.event = event;
+        this.startList = startList;
         performances = new ArrayList<>();
-    }
-
-    public CompetitionEvent(Event event, List<AthletePerformance> performances) {
-        this.event = event;
-        this.performances = performances;
     }
 
     public List<AthleteResult> getResult() {
@@ -33,10 +33,18 @@ public class CompetitionEvent {
                 .map(p->new AthleteResult(
                         p.getPerformance().getRank(),
                         p.getAthlete().getFirstName(),
-                        p.getAthlete().getlastName(),
+                        p.getAthlete().getLastName(),
                         p.getPerformance().toString()))
                 .sorted(Comparator.comparingInt(AthleteResult::rank))
                 .toList();
 
+    }
+
+    public List<Athlete> getStartList() {
+        return this.startList;
+    }
+
+    public void addResults(List<AthletePerformance> performances) {
+        this.performances = performances;
     }
 }

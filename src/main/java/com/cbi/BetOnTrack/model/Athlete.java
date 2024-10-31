@@ -22,7 +22,7 @@ public class Athlete {
         return this.firstName;
     }
 
-    public String getlastName() {
+    public String getLastName() {
         return this.lastName;
     }
 }

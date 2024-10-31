@@ -24,25 +24,29 @@ class CompetitionEventTest {
         event1500m = new Event(raceEvent, "1500");
         eventDiscusThrow = new Event(throwingEvent, "Discus Throw");
         event100m = new Event(raceEvent, "100m");
-
     }
 
     @Test
     public void emptyGetResult(){
-        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m);
+        List<Athlete> startList = new ArrayList<>();
+        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m, startList);
         List<AthleteResult> expected = new ArrayList<>();
         assertEquals(expected, competitionEvent.getResult());
     }
 
     @Test
     public void oneDistancePerfGetResult(){
+        Athlete jakob = new Athlete("Jakob", "Ingerbritsen");
+        List<Athlete> startList = List.of(jakob);
+        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m,startList);
+
         List<AthletePerformance> athletePerformances = List.of(
                 new AthletePerformance(
-                        new Athlete("Jakob", "Ingerbritsen"),
+                        jakob,
                         new RunPerformance(1, LocalTime.of(0, 3, 29, 0))
                 )
         );
-        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m,athletePerformances);
+        competitionEvent.addResults(athletePerformances);
 
         List<AthleteResult> expected = List.of(
                 new AthleteResult(1, "Jakob", "Ingerbritsen", "03:29.00")
@@ -52,21 +56,27 @@ class CompetitionEventTest {
 
     @Test
     public void raceDistancePerfGetResult(){
+        Athlete cole = new Athlete("Cole","Hocker");
+        Athlete yared = new Athlete("Yared","Nuguse");
+        Athlete josh = new Athlete("Josh","Kerr");
+        List<Athlete> startList = Arrays.asList(cole,yared,josh);
+        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m,startList);
+
         List<AthletePerformance> athletePerformances = Arrays.asList(
                 new AthletePerformance(
-                        new Athlete("Cole","Hocker"),
+                        cole,
                         new RunPerformance(1, LocalTime.of(0,3,27,650000000))
                 ),
                 new AthletePerformance(
-                        new Athlete("Yared","Nuguse"),
+                        yared,
                         new RunPerformance(3, LocalTime.of(0,3,27,800000000))
                 ),
                 new AthletePerformance(
-                        new Athlete("Josh","Kerr"),
+                        josh ,
                         new RunPerformance(2, LocalTime.of(0,3,27,790000000))
                 )
         );
-        CompetitionEvent competitionEvent = new CompetitionEvent(event1500m,athletePerformances);
+        competitionEvent.addResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1,"Cole","Hocker","03:27.65"),
@@ -78,13 +88,17 @@ class CompetitionEventTest {
 
     @Test
     public void babyThrowEventGetResult(){
+        Athlete melina = new Athlete("Melina","Robert-Michon");
+        List<Athlete> startList = List.of(melina);
+        CompetitionEvent competitionEvent = new CompetitionEvent(eventDiscusThrow,startList);
+
         List<AthletePerformance> athletePerformance = List.of(
                 new AthletePerformance(
-                        new Athlete("Melina","Robert-Michon"),
+                        melina,
                         new ThrowPerformance(1,66.73,-1.0)
                 )
         );
-        CompetitionEvent competitionEvent = new CompetitionEvent(eventDiscusThrow,athletePerformance);
+        competitionEvent.addResults(athletePerformance);
 
         List<AthleteResult> expected = List.of(
                 new AthleteResult(1, "Melina","Robert-Michon","66.73 (-1.0m/s)")
@@ -95,22 +109,27 @@ class CompetitionEventTest {
 
     @Test
     public void completeThrowEventGetResult(){
+        Athlete melina = new Athlete("Melina","Robert-Michon");
+        Athlete valarie = new Athlete("Valarie","Allman");
+        Athlete jorinde = new Athlete("Jorinde","Van Klinken");
+        List<Athlete> startList = Arrays.asList(melina,valarie,jorinde);
+        CompetitionEvent competitionEvent = new CompetitionEvent(eventDiscusThrow,startList);
+
         List<AthletePerformance> athletePerformances = Arrays.asList(
                 new AthletePerformance(
-                        new Athlete("Melina","Robert-Michon"),
+                        melina,
                         new ThrowPerformance(2,66.73,-1.0)
                 ),
                 new AthletePerformance(
-                        new Athlete("Valarie","Allman"),
+                        valarie,
                         new ThrowPerformance(1,69.59,-1.0)
                 ),
                 new AthletePerformance(
-                        new Athlete("Jorinde","Van Klinken"),
+                        jorinde,
                         new ThrowPerformance(3,64.81,-1.0)
                 )
-
         );
-        CompetitionEvent competitionEvent = new CompetitionEvent(eventDiscusThrow,athletePerformances);
+        competitionEvent.addResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1, "Valarie","Allman","69.59 (-1.0m/s)"),
@@ -123,22 +142,27 @@ class CompetitionEventTest {
 
     @Test
     public void sprintEventGetResult(){
+        Athlete kishane = new Athlete("Kishane","Thompson");
+        Athlete noah = new Athlete("Noah","Lyles");
+        Athlete fred = new Athlete("Fred","Kerley");
+        List<Athlete> startList = Arrays.asList(kishane,noah,fred);
+        CompetitionEvent competitionEvent = new CompetitionEvent(event100m,startList);
+
         List<AthletePerformance> athletePerformances = Arrays.asList(
                 new AthletePerformance(
-                        new Athlete("Kishane","Thompson"),
+                        kishane,
                         new RunPerformance(2,LocalTime.of(0,0,9,797890000),1.0)
                 ),
                 new AthletePerformance(
-                        new Athlete("Noah","Lyles"),
+                        noah,
                         new RunPerformance(1,LocalTime.of(0,0,9,797840000),1.0)
                 ),
                 new AthletePerformance(
-                        new Athlete("Fred","Kerley"),
+                        fred,
                         new RunPerformance(3,LocalTime.of(0,0,9,810000000),1.0)
                 )
-
         );
-        CompetitionEvent competitionEvent = new CompetitionEvent(event100m,athletePerformances);
+        competitionEvent.addResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1, "Noah","Lyles","09.79 (1.0m/s)"),
