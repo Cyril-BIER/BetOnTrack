@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class Athlete {
     @Id
@@ -12,6 +14,8 @@ public class Athlete {
     private Long id;
     private String firstName;
     private String lastName;
+
+    public Athlete(){}
 
     public Athlete(String firstName, String lastName) {
         this.firstName = firstName;
@@ -30,5 +34,22 @@ public class Athlete {
 
     public String getLastName() {
         return this.lastName;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Athlete athlete = (Athlete) o;
+        return Objects.equals(id, athlete.id) && Objects.equals(firstName, athlete.firstName) && Objects.equals(lastName, athlete.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName);
     }
 }

@@ -1,5 +1,6 @@
 package com.cbi.BetOnTrack.service;
 
+import com.cbi.BetOnTrack.dto.AthleteDTO;
 import com.cbi.BetOnTrack.model.Athlete;
 import com.cbi.BetOnTrack.repository.AthleteRepository;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,7 +32,7 @@ class AthleteServiceTest {
                 new Athlete(2L,"Noah","Lyles"),
                 new Athlete(3L,"Mondo","Duplantis")
         );
-        when(athleteRepository.findAllById(new ArrayList<>())).thenReturn(expected);
+        when(athleteRepository.findAll()).thenReturn(expected);
         assertEquals(expected, service.getAthletes(new ArrayList<>()));
     }
 
@@ -55,5 +57,26 @@ class AthleteServiceTest {
         assertEquals(expected, service.getAthletes(List.of(2L,3L)));
     }
 
+    @Test
+    public void babyPostAthlete(){
+        List<AthleteDTO> parameter = List.of(new AthleteDTO("Jakob", "Ingerbritsen"));
+        List<Athlete> expected = List.of(new Athlete("Jakob","Ingerbritsen"));
+
+        service.postAthletes(parameter);
+        verify(athleteRepository).saveAll(expected);
+    }
+
+    @Test
+    public void postManyAthletes(){
+        List<AthleteDTO> parameter = List.of(
+                new AthleteDTO("Jakob", "Ingerbritsen"),
+                new AthleteDTO("Josh", "Kerr"));
+        List<Athlete> expected = List.of(
+                new Athlete("Jakob","Ingerbritsen"),
+                new Athlete("Josh","Kerr"));
+
+        service.postAthletes(parameter);
+        verify(athleteRepository).saveAll(expected);
+    }
 
 }

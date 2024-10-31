@@ -27,6 +27,6 @@ public class AthleteController {
     public ResponseEntity<List<Athlete>> postAthletes(
             @RequestBody List<AthleteDTO> athletes
     ){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(athleteService.postAthletes(athletes), HttpStatus.OK);
     }
 }
