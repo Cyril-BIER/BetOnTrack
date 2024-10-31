@@ -40,10 +40,6 @@ public class CompetitionEvent {
 
     }
 
-    public List<Athlete> getStartList() {
-        return this.startList;
-    }
-
     public void addResults(List<AthletePerformance> performances) {
         this.performances = performances;
     }
