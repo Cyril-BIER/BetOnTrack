@@ -18,14 +18,9 @@ public class EventGroup {
     @OneToMany
     private List<Event> events;
 
-    public EventGroup(){
-        this.events = new ArrayList<>();
-    }
-
     public EventGroup(String name) {
         this.name = name;
-        this.events = new ArrayList<>();
-        }
+    }
 
     @Override
     public boolean equals(Object o) {
