@@ -17,8 +17,9 @@ public class EventController {
     EventService eventService;
 
     @GetMapping("/group")
-    public ResponseEntity<EventGroup> getGroup(List<String> names){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<EventGroup>> getGroup(
+            @RequestParam(name = "ids",defaultValue = "") List<Long> ids){
+        return new ResponseEntity<>(eventService.getGroups(ids), HttpStatus.OK);
     }
 
     @PostMapping("/group")

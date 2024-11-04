@@ -39,4 +39,26 @@ class EventServiceTest {
         assertEquals(expected, service.postGroup(List.of("Distance running", "Sprint")));
         verify(eventGroupRepository).saveAll(expected);
     }
+
+    @Test
+    public void getAllGroups(){
+        List<EventGroup> expected= List.of(
+                new EventGroup("Distance Running"),
+                new EventGroup("Sprint"),
+                new EventGroup("Throw")
+        );
+
+        when(eventGroupRepository.findAll()).thenReturn(expected);
+
+        assertEquals(expected, service.getGroups(List.of()));
+    }
+
+    @Test
+    public void getOneGroup(){
+        List<EventGroup> expected= List.of(
+                new EventGroup(1L, "Distance Running")
+        );
+        when(eventGroupRepository.findAllById(List.of(1L))).thenReturn(expected);
+        assertEquals(expected, service.getGroups(List.of(1L)));
+    }
 }

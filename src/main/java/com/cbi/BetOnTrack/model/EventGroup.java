@@ -2,7 +2,6 @@ package com.cbi.BetOnTrack.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +17,14 @@ public class EventGroup {
     @OneToMany
     private List<Event> events;
 
+    public EventGroup(){}
+
     public EventGroup(String name) {
+        this.name = name;
+    }
+
+    public EventGroup(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 

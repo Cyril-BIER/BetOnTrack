@@ -18,4 +18,9 @@ public class EventService {
         List<EventGroup> eventGroups = names.stream().map(EventGroup::new).toList();
         return eventGroupRepository.saveAll(eventGroups);
     }
+
+    public List<EventGroup> getGroups(List<Long> ids) {
+        if(ids.isEmpty()) return eventGroupRepository.findAll();
+        return eventGroupRepository.findAllById(ids);
+    }
 }
