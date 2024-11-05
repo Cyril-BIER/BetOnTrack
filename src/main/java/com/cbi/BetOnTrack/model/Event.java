@@ -15,6 +15,8 @@ public class Event {
     @ManyToOne
     private EventGroup eventGroup;
 
+    public Event(){}
+
     public Event(EventGroup eventGroup, String name) {
         this.eventGroup = eventGroup;
         this.name = name;

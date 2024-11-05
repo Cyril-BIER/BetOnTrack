@@ -36,8 +36,9 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<Event> getEvent(List<Long> ids){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<Event>> getEvent(
+            @RequestParam(name = "ids", defaultValue = "") List<Long> ids){
+        return new ResponseEntity<>(eventService.getEvents(ids), HttpStatus.OK);
     }
 
     @PostMapping
