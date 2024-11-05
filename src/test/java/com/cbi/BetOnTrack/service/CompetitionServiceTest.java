@@ -43,4 +43,22 @@ class CompetitionServiceTest {
         );
         verify(competitionRepository).saveAll(parameter);
     }
+
+    @Test
+    public void babyGetCompetition(){
+        service.getCompetition(List.of(1L));
+        verify(competitionRepository).findAllById(List.of(1L));
+    }
+
+    @Test
+    public void getCompetition(){
+        service.getCompetition(List.of(1L, 2L));
+        verify(competitionRepository).findAllById(List.of(1L, 2L));
+    }
+
+    @Test
+    public void getAllCompetition(){
+        service.getCompetition(List.of());
+        verify(competitionRepository).findAll();
+    }
 }

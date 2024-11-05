@@ -12,10 +12,16 @@ import java.util.List;
 public class CompetitionService {
     @Autowired
     CompetitionRepository competitionRepository;
+
     public List<Competition> postCompetition(List<CreateCompetition> createCompetitions) {
         List<Competition> competitions = createCompetitions.stream()
                 .map(c-> new Competition(c.name(),c.date()))
                 .toList();
         return competitionRepository.saveAll(competitions);
+    }
+
+    public List<Competition> getCompetition(List<Long> ids) {
+        if(ids.isEmpty()) return competitionRepository.findAll();
+        return competitionRepository.findAllById(ids);
     }
 }
