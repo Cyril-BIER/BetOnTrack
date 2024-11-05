@@ -17,12 +17,16 @@ public class EventService {
     EventGroupService eventGroupService;
 
     public List<Event> createEvent(List<CreateEvent> createEvents) {
-
         List<Event> events = createEvents.stream()
                 .map(e-> new Event(
                     eventGroupService.getGroups(List.of(e.groupID())).getFirst(),
                     e.name()))
                 .toList();
         return eventRepository.saveAll(events);
+    }
+
+    public List<Event> getEvents(List<Long> ids) {
+        if(ids.isEmpty()) return eventRepository.findAll();
+        return eventRepository.findAllById(ids);
     }
 }

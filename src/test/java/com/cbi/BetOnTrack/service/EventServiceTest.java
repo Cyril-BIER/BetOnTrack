@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,5 +57,23 @@ public class EventServiceTest {
         when(eventGroupService.getGroups(List.of(2L))).thenReturn(List.of(sprint));
         service.createEvent(List.of(create1500,create100));
         verify(eventRepository).saveAll(expected);
+    }
+
+    @Test
+    public void getAllEvents(){
+        service.getEvents(List.of());
+        verify(eventRepository).findAll();
+    }
+
+    @Test
+    public void getOneEvent(){
+        service.getEvents(List.of(1L));
+        verify(eventRepository).findAllById(List.of(1L));
+    }
+
+    @Test
+    public void getTwoEvents(){
+        service.getEvents(List.of(1L,2L));
+        verify(eventRepository).findAllById(List.of(1L,2L));
     }
 }
