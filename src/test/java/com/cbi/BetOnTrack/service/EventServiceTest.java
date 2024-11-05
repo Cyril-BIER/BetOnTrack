@@ -1,64 +1,62 @@
 package com.cbi.BetOnTrack.service;
 
+import com.cbi.BetOnTrack.dto.CreateEvent;
+import com.cbi.BetOnTrack.model.Event;
 import com.cbi.BetOnTrack.model.EventGroup;
-import com.cbi.BetOnTrack.repository.EventGroupRepository;
+import com.cbi.BetOnTrack.repository.EventRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
-class EventGroupServiceTest {
+public class EventServiceTest {
     @Mock
-    EventGroupRepository eventGroupRepository;
+    EventRepository eventRepository;
+
+    @Mock
+    EventGroupService eventGroupService;
 
     @InjectMocks
-    EventGroupService service;
+    EventService service;
 
-    @Test
-    public void babyPostGroup(){
-        List<EventGroup> expected = List.of(new EventGroup("Distance running"));
-        when(eventGroupRepository.saveAll(expected)).thenReturn(expected);
-        assertEquals(expected, service.postGroup(List.of("Distance running")));
-        verify(eventGroupRepository).saveAll(expected);
+    private static EventGroup distanceRunning;
+    private static EventGroup sprint;
+
+    @BeforeAll
+    public static void setup(){
+        distanceRunning=new EventGroup(1L, "Distance Running");
+        sprint=new EventGroup(2L, "Sprint");
     }
 
     @Test
-    public void postGroup(){
-        List<EventGroup> expected = List.of(
-                new EventGroup("Distance running"),
-                new EventGroup("Sprint"));
-        when(eventGroupRepository.saveAll(expected)).thenReturn(expected);
-        assertEquals(expected, service.postGroup(List.of("Distance running", "Sprint")));
-        verify(eventGroupRepository).saveAll(expected);
+    public void babyPostEvent(){
+        List<Event> expected = List.of(new Event(distanceRunning,"1500m"));
+        CreateEvent create1500 = new CreateEvent("1500m",1L);
+        when(eventGroupService.getGroups(List.of(1L))).thenReturn(List.of(distanceRunning));
+        service.createEvent(List.of(create1500));
+        verify(eventRepository).saveAll(expected);
     }
 
     @Test
-    public void getAllGroups(){
-        List<EventGroup> expected= List.of(
-                new EventGroup("Distance Running"),
-                new EventGroup("Sprint"),
-                new EventGroup("Throw")
-        );
+    public void multiPostEvent(){
+        List<Event> expected = List.of(
+                new Event(distanceRunning,"1500m"),
+                new Event(sprint, "100m"));
+        CreateEvent create1500 = new CreateEvent("1500m",1L);
+        CreateEvent create100 = new CreateEvent("100m",2L);
 
-        when(eventGroupRepository.findAll()).thenReturn(expected);
-
-        assertEquals(expected, service.getGroups(List.of()));
-    }
-
-    @Test
-    public void getOneGroup(){
-        List<EventGroup> expected= List.of(
-                new EventGroup(1L, "Distance Running")
-        );
-        when(eventGroupRepository.findAllById(List.of(1L))).thenReturn(expected);
-        assertEquals(expected, service.getGroups(List.of(1L)));
+        when(eventGroupService.getGroups(List.of(1L))).thenReturn(List.of(distanceRunning));
+        when(eventGroupService.getGroups(List.of(2L))).thenReturn(List.of(sprint));
+        service.createEvent(List.of(create1500,create100));
+        verify(eventRepository).saveAll(expected);
     }
 }
