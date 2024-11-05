@@ -1,8 +1,10 @@
 package com.cbi.BetOnTrack.controller;
 
+import com.cbi.BetOnTrack.dto.CreateEvent;
 import com.cbi.BetOnTrack.model.Event;
 import com.cbi.BetOnTrack.model.EventGroup;
 import com.cbi.BetOnTrack.service.EventGroupService;
+import com.cbi.BetOnTrack.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ import java.util.List;
 public class EventController {
     @Autowired
     EventGroupService eventGroupService;
+
+    @Autowired
+    EventService eventService;
 
     @GetMapping("/group")
     public ResponseEntity<List<EventGroup>> getGroup(
@@ -36,7 +41,8 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> postEvent(List<Event> events){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<List<Event>> postEvent(
+            @RequestBody List<CreateEvent> events){
+        return new ResponseEntity<>(eventService.createEvent(events), HttpStatus.OK);
     }
 }

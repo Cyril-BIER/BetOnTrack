@@ -32,4 +32,13 @@ public class Event {
     public int hashCode() {
         return Objects.hash(id, name, eventGroup);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }
