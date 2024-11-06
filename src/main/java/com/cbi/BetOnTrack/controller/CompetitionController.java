@@ -23,14 +23,14 @@ public class CompetitionController {
     public ResponseEntity<List<Competition>> getCompetition(
             @RequestParam(name = "ids",defaultValue = "") List<Long> ids
     ){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(competitionService.getCompetition(ids), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<List<Competition>> postCompetition(
             @RequestBody List<CreateCompetition> competitions
     ){
-        return new ResponseEntity<>(competitionService.postCompetition(competitions),HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(competitionService.postCompetition(competitions),HttpStatus.OK);
     }
 
     @PostMapping("/events")

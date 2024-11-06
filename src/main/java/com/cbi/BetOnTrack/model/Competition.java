@@ -19,6 +19,8 @@ public class Competition {
     @OneToMany
     List<CompetitionEvent> competitionEvents;
 
+    public Competition(){}
+
     public Competition(String name, LocalDate date) {
         this.name = name;
         this.date = date;
@@ -35,5 +37,21 @@ public class Competition {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, date, competitionEvents);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public List<CompetitionEvent> getCompetitionEvents() {
+        return competitionEvents;
     }
 }
