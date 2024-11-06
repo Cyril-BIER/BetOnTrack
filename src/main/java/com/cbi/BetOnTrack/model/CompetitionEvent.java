@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class CompetitionEvent {
@@ -42,5 +43,18 @@ public class CompetitionEvent {
 
     public void addResults(List<AthletePerformance> performances) {
         this.performances = performances;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompetitionEvent that = (CompetitionEvent) o;
+        return Objects.equals(id, that.id) && Objects.equals(event, that.event) && Objects.equals(startList, that.startList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, event, startList);
     }
 }

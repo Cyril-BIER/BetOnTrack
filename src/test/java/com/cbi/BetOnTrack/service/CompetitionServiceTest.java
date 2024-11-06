@@ -1,8 +1,10 @@
 package com.cbi.BetOnTrack.service;
 
 import com.cbi.BetOnTrack.dto.CreateCompetition;
-import com.cbi.BetOnTrack.model.Competition;
+import com.cbi.BetOnTrack.dto.CreateCompetitionEvent;
+import com.cbi.BetOnTrack.model.*;
 import com.cbi.BetOnTrack.repository.CompetitionRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,17 +13,36 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CompetitionServiceTest {
     @Mock
     CompetitionRepository competitionRepository;
 
+    @Mock
+    EventService eventService;
+
+    @Mock
+    AthleteService athleteService;
+
     @InjectMocks
     CompetitionService service;
+
+    private static Event distance1500;
+    private static Event distance100;
+
+    @BeforeAll
+    public static void setup(){
+        EventGroup distanceRunning = new EventGroup(1L, "Distance Running");
+        EventGroup sprint = new EventGroup(2L, "Sprint");
+        distance1500 = new Event(distanceRunning,"1500m");
+        distance100 = new Event(sprint,"100m");
+    }
 
     @Test
     public void babyPostCompetition(){
@@ -60,5 +81,23 @@ class CompetitionServiceTest {
     public void getAllCompetition(){
         service.getCompetition(List.of());
         verify(competitionRepository).findAll();
+    }
+
+    @Test
+    public void babyAddEvents(){
+        Competition expected = new Competition("Olympics",LocalDate.of(2024,8,1));
+        Athlete jakob = new Athlete(1L,"Jakob","Ingerbritsen");
+        CompetitionEvent competitionEvent = new CompetitionEvent(distance1500,List.of(jakob));
+        expected.setCompetitionEvents(List.of(competitionEvent));
+
+        when(competitionRepository.findById(1L)).thenReturn(Optional.of(new Competition("Olympics",LocalDate.of(2024,8,1))));
+        when(eventService.getEvents(List.of(1L))).thenReturn(List.of(distance1500));
+        when(athleteService.getAthletes(List.of(1L))).thenReturn(List.of(jakob));
+        when(competitionRepository.save(expected)).thenReturn(expected);
+
+        service.addEvents(1L, List.of(
+                new CreateCompetitionEvent(1L,List.of(1L))
+        ));
+        verify(competitionRepository).save(expected);
     }
 }

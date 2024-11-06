@@ -54,4 +54,8 @@ public class Competition {
     public List<CompetitionEvent> getCompetitionEvents() {
         return competitionEvents;
     }
+
+    public void setCompetitionEvents(List<CompetitionEvent> competitionEvents) {
+        this.competitionEvents = competitionEvents;
+    }
 }
