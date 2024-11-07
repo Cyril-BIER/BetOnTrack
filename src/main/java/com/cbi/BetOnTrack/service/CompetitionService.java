@@ -10,7 +10,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionService {
@@ -43,8 +45,9 @@ public class CompetitionService {
                 .map(e-> new CompetitionEvent(
                         eventService.getEvents(List.of(e.eventID())).getFirst(),
                         athleteService.getAthletes(e.startList())))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
         competition.setCompetitionEvents(competitionEvents);
-        return competitionRepository.save(competition).getCompetitionEvents();
+        competition = competitionRepository.save(competition);
+        return competition.getCompetitionEvents();
     }
 }

@@ -16,7 +16,7 @@ public class Competition {
 
     private LocalDate date;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<CompetitionEvent> competitionEvents;
 
     public Competition(){}

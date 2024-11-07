@@ -15,13 +15,15 @@ public class CompetitionEvent {
     private Long id;
 
     @ManyToOne
-    private final Event event;
+    private Event event;
 
     @OneToMany
     private List<Athlete> startList;
 
     @OneToMany
     private List<AthletePerformance> performances;
+
+    public CompetitionEvent(){}
 
     public CompetitionEvent(Event event, List<Athlete> startList) {
         this.event = event;
@@ -56,5 +58,17 @@ public class CompetitionEvent {
     @Override
     public int hashCode() {
         return Objects.hash(id, event, startList);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public List<Athlete> getStartList() {
+        return startList;
     }
 }

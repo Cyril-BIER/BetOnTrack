@@ -34,11 +34,11 @@ public class CompetitionController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<Competition> postEvents(
+    public ResponseEntity<List<CompetitionEvent>> postEvents(
             @RequestParam(name="competitionID") Long competitionID,
             @RequestBody List<CreateCompetitionEvent> events
     ){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(competitionService.addEvents(competitionID,events), HttpStatus.OK);
     }
 
     @PostMapping("/events/addResults")
