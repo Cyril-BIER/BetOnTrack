@@ -44,6 +44,7 @@ public class CompetitionService {
         List<CompetitionEvent> competitionEvents = events.stream()
                 .map(e-> new CompetitionEvent(
                         eventService.getEvents(List.of(e.eventID())).getFirst(),
+                        e.name(),
                         athleteService.getAthletes(e.startList())))
                 .collect(Collectors.toCollection(ArrayList::new));
         competition.addCompetitionEvents(competitionEvents);

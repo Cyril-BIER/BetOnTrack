@@ -85,7 +85,7 @@ class CompetitionServiceTest {
     public void babyAddEvents(){
         Competition expected = new Competition("Olympics",LocalDate.of(2024,8,1));
         Athlete jakob = new Athlete(1L,"Jakob","Ingerbritsen");
-        CompetitionEvent competitionEvent = new CompetitionEvent(distance1500,List.of(jakob));
+        CompetitionEvent competitionEvent = new CompetitionEvent(distance1500,"Final",List.of(jakob));
         expected.setCompetitionEvents(List.of(competitionEvent));
 
         when(competitionRepository.findById(1L)).thenReturn(Optional.of(new Competition("Olympics",LocalDate.of(2024,8,1))));
@@ -94,7 +94,7 @@ class CompetitionServiceTest {
         when(competitionRepository.save(expected)).thenReturn(expected);
 
         service.addEvents(1L, List.of(
-                new CreateCompetitionEvent(1L,List.of(1L))
+                new CreateCompetitionEvent(1L,"Final",List.of(1L))
         ));
         verify(competitionRepository).save(expected);
     }
@@ -103,14 +103,14 @@ class CompetitionServiceTest {
     public void addOneMoreEvent(){
         Competition existingComp = new Competition("Olympics",LocalDate.of(2024,8,1));
         Athlete jakob = new Athlete(1L,"Jakob","Ingerbritsen");
-        CompetitionEvent competitionEvent1 = new CompetitionEvent(distance1500,List.of(jakob));
+        CompetitionEvent competitionEvent1 = new CompetitionEvent(distance1500,"Final",List.of(jakob));
         List<CompetitionEvent> competitionEvents = new ArrayList<>();
         competitionEvents.add(competitionEvent1);
         existingComp.setCompetitionEvents(competitionEvents);
         when(competitionRepository.findById(1L)).thenReturn(Optional.of(existingComp));
 
         Athlete noah = new Athlete(2L,"Noah","Lyles");
-        CompetitionEvent competitionEvent2 = new CompetitionEvent(distance100,List.of(noah));
+        CompetitionEvent competitionEvent2 = new CompetitionEvent(distance100,"Final",List.of(noah));
 
         Competition expected = new Competition("Olympics",LocalDate.of(2024,8,1));
         expected.setCompetitionEvents(Arrays.asList(competitionEvent1, competitionEvent2));
@@ -120,7 +120,7 @@ class CompetitionServiceTest {
         when(competitionRepository.save(expected)).thenReturn(expected);
 
         service.addEvents(1L, List.of(
-                new CreateCompetitionEvent(2L,List.of(2L))
+                new CreateCompetitionEvent(2L,"Final",List.of(2L))
         ));
         verify(competitionRepository).save(expected);
     }

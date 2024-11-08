@@ -14,6 +14,9 @@ public class CompetitionEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
+    private String name;
+
     @ManyToOne
     private Event event;
 
@@ -25,8 +28,9 @@ public class CompetitionEvent {
 
     public CompetitionEvent(){}
 
-    public CompetitionEvent(Event event, List<Athlete> startList) {
+    public CompetitionEvent(Event event, String name ,List<Athlete> startList) {
         this.event = event;
+        this.name = name;
         this.startList = startList;
         performances = new ArrayList<>();
     }
@@ -47,21 +51,13 @@ public class CompetitionEvent {
         this.performances = performances;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CompetitionEvent that = (CompetitionEvent) o;
-        return Objects.equals(id, that.id) && Objects.equals(event, that.event) && Objects.equals(startList, that.startList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, event, startList);
-    }
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Event getEvent() {
@@ -70,5 +66,18 @@ public class CompetitionEvent {
 
     public List<Athlete> getStartList() {
         return startList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompetitionEvent that = (CompetitionEvent) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(event, that.event) && Objects.equals(startList, that.startList) && Objects.equals(performances, that.performances);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, event, startList, performances);
     }
 }
