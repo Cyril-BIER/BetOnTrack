@@ -17,7 +17,7 @@ public class CompetitionEvent {
     @ManyToOne
     private Event event;
 
-    @OneToMany
+    @ManyToMany
     private List<Athlete> startList;
 
     @OneToMany
