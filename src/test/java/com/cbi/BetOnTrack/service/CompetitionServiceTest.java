@@ -12,10 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -97,6 +95,32 @@ class CompetitionServiceTest {
 
         service.addEvents(1L, List.of(
                 new CreateCompetitionEvent(1L,List.of(1L))
+        ));
+        verify(competitionRepository).save(expected);
+    }
+
+    @Test
+    public void addOneMoreEvent(){
+        Competition existingComp = new Competition("Olympics",LocalDate.of(2024,8,1));
+        Athlete jakob = new Athlete(1L,"Jakob","Ingerbritsen");
+        CompetitionEvent competitionEvent1 = new CompetitionEvent(distance1500,List.of(jakob));
+        List<CompetitionEvent> competitionEvents = new ArrayList<>();
+        competitionEvents.add(competitionEvent1);
+        existingComp.setCompetitionEvents(competitionEvents);
+        when(competitionRepository.findById(1L)).thenReturn(Optional.of(existingComp));
+
+        Athlete noah = new Athlete(2L,"Noah","Lyles");
+        CompetitionEvent competitionEvent2 = new CompetitionEvent(distance100,List.of(noah));
+
+        Competition expected = new Competition("Olympics",LocalDate.of(2024,8,1));
+        expected.setCompetitionEvents(Arrays.asList(competitionEvent1, competitionEvent2));
+
+        when(eventService.getEvents(List.of(2L))).thenReturn(List.of(distance100));
+        when(athleteService.getAthletes(List.of(2L))).thenReturn(List.of(noah));
+        when(competitionRepository.save(expected)).thenReturn(expected);
+
+        service.addEvents(1L, List.of(
+                new CreateCompetitionEvent(2L,List.of(2L))
         ));
         verify(competitionRepository).save(expected);
     }

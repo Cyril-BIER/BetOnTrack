@@ -3,6 +3,7 @@ package com.cbi.BetOnTrack.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,11 +20,14 @@ public class Competition {
     @OneToMany(cascade = CascadeType.ALL)
     List<CompetitionEvent> competitionEvents;
 
-    public Competition(){}
+    public Competition(){
+        competitionEvents = new ArrayList<>();
+    }
 
     public Competition(String name, LocalDate date) {
         this.name = name;
         this.date = date;
+        competitionEvents = new ArrayList<>();
     }
 
     @Override
@@ -57,5 +61,9 @@ public class Competition {
 
     public void setCompetitionEvents(List<CompetitionEvent> competitionEvents) {
         this.competitionEvents = competitionEvents;
+    }
+
+    public void addCompetitionEvents(List<CompetitionEvent> competitionEvents) {
+        this.competitionEvents.addAll(competitionEvents);
     }
 }

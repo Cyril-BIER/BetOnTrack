@@ -46,7 +46,7 @@ public class CompetitionService {
                         eventService.getEvents(List.of(e.eventID())).getFirst(),
                         athleteService.getAthletes(e.startList())))
                 .collect(Collectors.toCollection(ArrayList::new));
-        competition.setCompetitionEvents(competitionEvents);
+        competition.addCompetitionEvents(competitionEvents);
         competition = competitionRepository.save(competition);
         return competition.getCompetitionEvents();
     }
