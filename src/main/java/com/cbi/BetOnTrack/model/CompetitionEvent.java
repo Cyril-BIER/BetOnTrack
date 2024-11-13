@@ -47,7 +47,7 @@ public class CompetitionEvent {
 
     }
 
-    public void addResults(List<AthletePerformance> performances) {
+    public void setResults(List<AthletePerformance> performances) {
         this.performances = performances;
     }
 
@@ -67,6 +67,7 @@ public class CompetitionEvent {
     public List<Athlete> getStartList() {
         return startList;
     }
+
 
     @Override
     public boolean equals(Object o) {

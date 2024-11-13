@@ -46,7 +46,7 @@ class CompetitionEventTest {
                         new RunPerformance(1, LocalTime.of(0, 3, 29, 0))
                 )
         );
-        competitionEvent.addResults(athletePerformances);
+        competitionEvent.setResults(athletePerformances);
 
         List<AthleteResult> expected = List.of(
                 new AthleteResult(1, "Jakob", "Ingerbritsen", "03:29.00")
@@ -76,7 +76,7 @@ class CompetitionEventTest {
                         new RunPerformance(2, LocalTime.of(0,3,27,790000000))
                 )
         );
-        competitionEvent.addResults(athletePerformances);
+        competitionEvent.setResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1,"Cole","Hocker","03:27.65"),
@@ -98,7 +98,7 @@ class CompetitionEventTest {
                         new ThrowPerformance(1,66.73,-1.0)
                 )
         );
-        competitionEvent.addResults(athletePerformance);
+        competitionEvent.setResults(athletePerformance);
 
         List<AthleteResult> expected = List.of(
                 new AthleteResult(1, "Melina","Robert-Michon","66.73 (-1.0m/s)")
@@ -129,7 +129,7 @@ class CompetitionEventTest {
                         new ThrowPerformance(3,64.81,-1.0)
                 )
         );
-        competitionEvent.addResults(athletePerformances);
+        competitionEvent.setResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1, "Valarie","Allman","69.59 (-1.0m/s)"),
@@ -162,7 +162,7 @@ class CompetitionEventTest {
                         new RunPerformance(3,LocalTime.of(0,0,9,810000000),1.0)
                 )
         );
-        competitionEvent.addResults(athletePerformances);
+        competitionEvent.setResults(athletePerformances);
 
         List<AthleteResult> expected = Arrays.asList(
                 new AthleteResult(1, "Noah","Lyles","09.79 (1.0m/s)"),
