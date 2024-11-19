@@ -6,17 +6,21 @@ import com.cbi.BetOnTrack.model.CompetitionEvent;
 import com.cbi.BetOnTrack.model.RunPerformance;
 import com.cbi.BetOnTrack.repository.CompetitionEventRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionEventService {
     @Autowired
     CompetitionEventRepository competitionEventRepository;
 
+    @Transactional
     public CompetitionEvent postResults(Long id, List<AthletePerformanceDTO> results) {
         CompetitionEvent competitionEvent = competitionEventRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -28,7 +32,7 @@ public class CompetitionEventService {
                                 .orElseThrow(),
                         new RunPerformance(e.getRank(),e.getTimePerformance())
                 ))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
         competitionEvent.setResults(athletePerformances);
         return competitionEventRepository.save(competitionEvent);
     }

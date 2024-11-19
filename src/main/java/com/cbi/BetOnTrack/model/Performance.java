@@ -13,6 +13,8 @@ public abstract class Performance {
 
     private Integer rank;
 
+    Performance(){}
+
     Performance(Integer rank) {
         this.rank = rank;
     }

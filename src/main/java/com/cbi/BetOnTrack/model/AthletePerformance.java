@@ -10,11 +10,13 @@ public class AthletePerformance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Athlete athlete;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Performance performance;
+
+    public AthletePerformance(){}
 
     public AthletePerformance(Athlete athlete, Performance performance) {
         this.athlete = athlete;

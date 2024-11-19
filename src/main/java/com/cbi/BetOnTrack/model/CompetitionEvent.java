@@ -23,7 +23,7 @@ public class CompetitionEvent {
     @ManyToMany
     private List<Athlete> startList;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<AthletePerformance> performances;
 
     public CompetitionEvent(){}

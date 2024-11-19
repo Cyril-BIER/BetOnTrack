@@ -1,5 +1,7 @@
 package com.cbi.BetOnTrack.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import java.time.LocalTime;
@@ -8,8 +10,12 @@ import java.util.Objects;
 
 @Entity
 public class RunPerformance extends Performance{
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "HH:mm:ss.SSS")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalTime time;
     private Double wind;
+
+    public RunPerformance(){super();}
 
     public RunPerformance(Integer rank, LocalTime time) {
         super(rank);

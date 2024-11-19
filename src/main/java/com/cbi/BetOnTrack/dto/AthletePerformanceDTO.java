@@ -1,12 +1,17 @@
 package com.cbi.BetOnTrack.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalTime;
 
 public class AthletePerformanceDTO {
-    private final Integer rank;
-    private final Long athleteID;
+    private Integer rank;
+    private Long athleteID;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "HH:mm:ss.SSS")
     private LocalTime timePerformance;
     private Double distancePerformance;
+
+    public AthletePerformanceDTO(){}
 
     public AthletePerformanceDTO(Integer rank, Long athleteID, LocalTime timePerformance) {
         this.rank = rank;

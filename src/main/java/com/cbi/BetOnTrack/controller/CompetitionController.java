@@ -1,10 +1,11 @@
 package com.cbi.BetOnTrack.controller;
 
+import com.cbi.BetOnTrack.dto.AthletePerformanceDTO;
 import com.cbi.BetOnTrack.dto.CreateCompetition;
 import com.cbi.BetOnTrack.dto.CreateCompetitionEvent;
-import com.cbi.BetOnTrack.dto.CreatePerformance;
 import com.cbi.BetOnTrack.model.Competition;
 import com.cbi.BetOnTrack.model.CompetitionEvent;
+import com.cbi.BetOnTrack.service.CompetitionEventService;
 import com.cbi.BetOnTrack.service.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ import java.util.List;
 public class CompetitionController {
     @Autowired
     CompetitionService competitionService;
+
+    @Autowired
+    CompetitionEventService competitionEventService;
 
     @GetMapping
     public ResponseEntity<List<Competition>> getCompetition(
@@ -44,8 +48,8 @@ public class CompetitionController {
     @PostMapping("/events/addResults")
     public ResponseEntity<CompetitionEvent> postResults(
             @RequestParam(name="competitionEventID") Long competitionEventID,
-            @RequestBody List<CreatePerformance> events
+            @RequestBody List<AthletePerformanceDTO> results
     ){
-        return new ResponseEntity<>(null, HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(competitionEventService.postResults(competitionEventID,results), HttpStatus.OK);
     }
 }
