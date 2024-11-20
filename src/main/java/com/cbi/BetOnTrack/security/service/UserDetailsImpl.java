@@ -33,7 +33,6 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Profile profile){
-        // FIXME : Pas sûr de ça
         String roleName;
         if(profile instanceof Admin){
             roleName = "ROLE_ADMIN";
