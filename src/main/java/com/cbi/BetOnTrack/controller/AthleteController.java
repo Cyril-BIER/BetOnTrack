@@ -6,6 +6,7 @@ import com.cbi.BetOnTrack.service.AthleteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class AthleteController {
     AthleteService athleteService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('BOOKMAKER')")
     public ResponseEntity<List<Athlete>> getAthletes(
             @RequestParam(name = "id", defaultValue = "")List<Long>ids
     ){
@@ -24,6 +26,7 @@ public class AthleteController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('BOOKMAKER')")
     public ResponseEntity<List<Athlete>> postAthletes(
             @RequestBody List<AthleteDTO> athletes
     ){

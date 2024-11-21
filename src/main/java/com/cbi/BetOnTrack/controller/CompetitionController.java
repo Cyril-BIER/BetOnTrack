@@ -10,6 +10,7 @@ import com.cbi.BetOnTrack.service.CompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CompetitionController {
     CompetitionEventService competitionEventService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('BOOKMAKER') or hasRole('ADMIN')")
     public ResponseEntity<List<Competition>> getCompetition(
             @RequestParam(name = "ids",defaultValue = "") List<Long> ids
     ){
@@ -31,6 +33,7 @@ public class CompetitionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('BOOKMAKER')")
     public ResponseEntity<List<Competition>> postCompetition(
             @RequestBody List<CreateCompetition> competitions
     ){
@@ -38,6 +41,7 @@ public class CompetitionController {
     }
 
     @PostMapping("/events")
+    @PreAuthorize("hasRole('BOOKMAKER')")
     public ResponseEntity<List<CompetitionEvent>> postEvents(
             @RequestParam(name="competitionID") Long competitionID,
             @RequestBody List<CreateCompetitionEvent> events
@@ -46,6 +50,7 @@ public class CompetitionController {
     }
 
     @PostMapping("/events/addResults")
+    @PreAuthorize("hasRole('BOOKMAKER')")
     public ResponseEntity<CompetitionEvent> postResults(
             @RequestParam(name="competitionEventID") Long competitionEventID,
             @RequestBody List<AthletePerformanceDTO> results

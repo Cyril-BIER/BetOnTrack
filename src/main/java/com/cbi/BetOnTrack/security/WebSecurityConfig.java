@@ -27,7 +27,7 @@ public class WebSecurityConfig {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private AuthenticationEntryPoint unauthorizedHandler;
+    AuthenticationEntryPoint unauthorizedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -65,9 +65,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth->
                         auth.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/api/competition/**").permitAll()
-                                .requestMatchers("/api/event/**").permitAll()
-                                .requestMatchers("/api/athlete/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers(toH2Console()).permitAll()
                                 .anyRequest().authenticated()
