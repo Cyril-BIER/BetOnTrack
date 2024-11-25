@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+api/data/BetOnTrack.mv.db
+api/data/BetOnTrack.trace.db
